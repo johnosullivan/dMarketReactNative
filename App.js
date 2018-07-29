@@ -1,7 +1,36 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import AppIntroSlider from 'react-native-app-intro-slider';
+import { StyleSheet, Text, View, Button } from 'react-native';
 
+import './global';
+
+const Web3 = require('web3');
+
+const web3 = new Web3(
+  new Web3.providers.HttpProvider('https://mainnet.infura.io/'),
+);
+
+export default class App extends React.Component {
+
+  onPressLearnMore = () => {
+    web3.eth.getBlock('latest').then(console.log);
+  }
+
+  render() {
+    // printing on the console the latest ethereum block
+    return (
+      <View style={styles.container}>
+      <Button
+  onPress={this.onPressLearnMore}
+  title="Learn More"
+  color="#841584"
+  accessibilityLabel="Learn more about this purple button"
+/>
+        <Text>Check your console!</Text>
+        <Text>You should find info on the latest ethereum block.</Text>
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -10,62 +39,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  image: {
-    width: 320,
-    height: 320,
-  }
 });
-
-const slides = [
-  {
-    key: 'somethun',
-    title: 'Title 1',
-    text: 'Description.\nSay something cool',
-    image: require('./assets/1.jpg'),
-    imageStyle: styles.image,
-    backgroundColor: '#59b2ab',
-  },
-  {
-    key: 'somethun-dos',
-    title: 'Title 2',
-    text: 'Other cool stuff',
-    image: require('./assets/2.jpg'),
-    imageStyle: styles.image,
-    backgroundColor: '#febe29',
-  },
-  {
-    key: 'somethun1',
-    title: 'Rocket guy',
-    text: 'I\'m already out of descriptions\n\nLorem ipsum bla bla bla',
-    image: require('./assets/3.jpg'),
-    imageStyle: styles.image,
-    backgroundColor: '#22bcb5',
-  }
-];
-
-export default class App extends React.Component {
-  /*
-  this.state = {
-    showRealApp: false
-  }*/
-  _onDone = () => {
-    // User finished the introduction. Show real app through
-    // navigation or simply by controlling state
-    //this.setState({ showRealApp: true });
-    console.log("Done With Setup");
-  }
-  render() {
-    /*if (this.state.showRealApp) {
-      return (
-        <View style={styles.container}>
-          <Text>Open up App.js to start working on your app!</Text>
-          <Text>Changes you make will automatically reload.</Text>
-          <Text>Shake your phone to open the developer menu.</Text>
-        </View>
-      );
-    } else {
-      return <AppIntroSlider slides={slides} onDone={this._onDone}/>;
-    }*/
-    return <AppIntroSlider slides={slides} onDone={this._onDone}/>;
-  }
-}
