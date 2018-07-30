@@ -1,15 +1,34 @@
-# Web3.js and React Native app
+### Quick Start
 
-This is a boilerplate for people that want to use the [web3.js Ethereum api](https://github.com/ethereum/web3.js/) with [react native](https://facebook.github.io/react-native/).
+##### Prerequisites
 
-## Run
+Node package manager.
 
-1. `cd crna-and-web3`
-2. `yarn install`
-3. `yarn run ios`
+```
+npm install -g react-native-cli
+npm install -g rn-nodeify
+npm install -g react-devtools
+```
 
-## How to run Web3.js Ethereum Api with React Native
+##### Setup
 
-Visit [this link](https://gist.github.com/dougbacelar/29e60920d8fa1982535247563eb63766) for a step-by-step guide on how this project was created (also some troubleshooting information).
+```
+npm install
+react-native link
+```
 
-This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app) version 1.0.0.
+##### Running
+
+Platform: **iOS**
+
+```
+react-native run-ios
+```
+
+<u>Note</u>: First time running on iOS *might* require you to set the Signature Certificate under *General > Signing* for Target *[AppName]* and *[AppName]Test*.
+
+Platform: **Android**
+
+```
+react-native run-android
+```
