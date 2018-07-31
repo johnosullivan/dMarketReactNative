@@ -1,12 +1,26 @@
-import './../shim.js'
+// Required for eth-lightwallet
+import './../../shim.js'
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, View, Button, TextInput, AsyncStorage } from 'react-native'
-import * as lightwallet from 'eth-lightwallet';
-import Web3 from 'web3';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  //Button,
+  TextInput,
+  AsyncStorage,
+  Image
+} from 'react-native'
 
-const web3 = new Web3();
-web3.setProvider(new web3.providers.HttpProvider('https://ropsten.infura.io/'));
-console.log(Web3);
+import * as lightwallet from 'eth-lightwallet';
+
+//import Web3 from 'web3';
+//const web3 = new Web3();
+//web3.setProvider(new web3.providers.HttpProvider('https://ropsten.infura.io/'));
+//console.log(Web3);
+import AppIntroSlider from 'react-native-app-intro-slider';
+import { slides } from '../../intro/introslides';
+
 
 export default class App extends Component {
   constructor(props) {
@@ -28,10 +42,10 @@ export default class App extends Component {
   componentWillMount() {
     this._loadKeystore()
 
-    const balance = web3.eth.getBalance('0x1aCc2977D4C4C8AcF2e87840ea1432248AEfeEA7', (err2, balance) => {
+    /*const balance = web3.eth.getBalance('0x1aCc2977D4C4C8AcF2e87840ea1432248AEfeEA7', (err2, balance) => {
        console.log('Balance ' + balance);
        this.setState({balance: 'Balance: ' + balance});
-    });
+    });*/
   }
 
   _saveKeystore = async () => {
@@ -147,8 +161,23 @@ export default class App extends Component {
     this.setState({ restoring: true })
   }
 
+  _onDone = () => {
+    console.log("_onDone");
+  }
+
   render() {
     console.log("Current_State: ", this.state);
+
+    //return <AppIntroSlider slides={slides} onDone={this._onDone}/>;
+
+
+    return (
+      <View style={styles.container}>
+
+      </View>
+    );
+
+    /*
     return (
       <View style={styles.container}>
         { !this.state.keystore ?
@@ -216,8 +245,9 @@ export default class App extends Component {
           </View>
         }
       </View>
-    )
+    )*/
   }
+
 }
 
 const styles = StyleSheet.create({
