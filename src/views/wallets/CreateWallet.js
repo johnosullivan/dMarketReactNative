@@ -4,62 +4,85 @@ import {
   View,
   StyleSheet,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator
 } from 'react-native';
 
 const styles = StyleSheet.create({
    container: {
-      paddingTop: 23
+      paddingTop: 23,
+      backgroundColor: "#5A8DAB",
+      flex: 1
    },
    input: {
       margin: 15,
       height: 40,
-      borderColor: '#7a42f4',
-      borderWidth: 1
+      borderColor: '#5aaba1',
+      borderWidth: 1,
+      borderRadius: 5,
+      padding: 4,
+      backgroundColor: "#fff",
    },
    submitButton: {
-      backgroundColor: '#7a42f4',
+      backgroundColor: '#5aaba1',
       padding: 10,
       margin: 15,
       height: 40,
+      borderRadius: 5,
+      alignItems: 'center'
    },
    submitButtonText:{
       color: 'white'
    }
-})
+});
+
+import Loader from '../../components/Loader';
 
 export default class CreateWallet extends Component {
 
    state = {
-      walletPassword: '',
-      walletRePassword: ''
-   }
+     walletPassword: '',
+     walletRePassword: '',
+     generating: false
+   };
+
    handleWalletPassword = (text) => {
-      this.setState({ walletPassword: text })
-   }
+     this.setState({ walletPassword: text })
+   };
    handleWalletRePassword = (text) => {
-      this.setState({ walletRePassword: text })
-   }
+     this.setState({ walletRePassword: text })
+   };
+
    generate = (walletPassword, walletRePassword) => {
+     console.log("walletPassword: ", walletPassword);
+     console.log("walletRePassword: ", walletRePassword);
 
+     this.setState({ generating: true });
+     var self = this;
+     setTimeout(function(){
+       self.setState({ generating: false });
+     }, 3000);
+   };
 
-   }
    render() {
-
-    return (
+      console.log(Loader);
+      return (
          <View style = {styles.container}>
+         <Loader loading={this.state.generating} />
             <TextInput style = {styles.input}
                underlineColorAndroid = "transparent"
                placeholder = "Wallet Password"
-               placeholderTextColor = "#9a73ef"
+               placeholderTextColor = "#5aaba1"
                autoCapitalize = "none"
+               secureTextEntry = {true}
                onChangeText = {this.handleWalletPassword}/>
 
             <TextInput style = {styles.input}
                underlineColorAndroid = "transparent"
                placeholder = "Wallet Password Retype"
-               placeholderTextColor = "#9a73ef"
+               placeholderTextColor = "#5aaba1"
                autoCapitalize = "none"
+               secureTextEntry = {true}
                onChangeText = {this.handleWalletRePassword}/>
 
             <TouchableOpacity
@@ -67,9 +90,9 @@ export default class CreateWallet extends Component {
                onPress = {
                   () => this.generate(this.state.walletPassword, this.state.walletRePassword)
                }>
-               <Text style = {styles.submitButtonText}> Submit </Text>
+               <Text style = {styles.submitButtonText}> Create Wallet </Text>
             </TouchableOpacity>
          </View>
-      );
+       );
   }
 }
