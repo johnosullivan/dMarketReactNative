@@ -1,6 +1,6 @@
 // Required for eth-lightwallet
 import './../../shim.js'
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
   Platform,
   StyleSheet,
@@ -9,8 +9,9 @@ import {
   //Button,
   TextInput,
   AsyncStorage,
-  Image
-} from 'react-native'
+  Image,
+  TouchableHighlight
+} from 'react-native';
 
 import * as lightwallet from 'eth-lightwallet';
 
@@ -21,6 +22,21 @@ import * as lightwallet from 'eth-lightwallet';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { slides } from '../../intro/introslides';
 
+import { Header, List, ListItem  } from 'react-native-elements';
+
+import SideMenu from 'react-native-side-menu';
+import Menu from './Menu';
+
+
+class ContentView extends Component {
+  render() {
+    return (
+      <View style={styles.container}>
+      
+      </View>
+    );
+  }
+}
 
 export default class App extends Component {
   constructor(props) {
@@ -32,12 +48,23 @@ export default class App extends Component {
       address: '',
       generating: false,
       restoring: false,
-      restoreMnemonic: ''
+      restoreMnemonic: '',
+      isOpen: true,
+      isOpen: false
     }
 
     this.password = "Simple Secret Wallet Unlock Password Which Needs To Be Stored Here"
     this.keystore = null
+
+
+    this.toggleSideMenu = this.toggleSideMenu.bind(this);
   }
+
+  toggleSideMenu () {
+  this.setState({
+    isOpen: !this.state.isOpen
+  })
+}
 
   componentWillMount() {
     this._loadKeystore()
@@ -165,19 +192,41 @@ export default class App extends Component {
     console.log("_onDone");
   }
 
+  onMenuItemSelected = item =>
+      this.setState({
+        isOpen: false,
+        selectedItem: item,
+      });
+
   render() {
     console.log("Current_State: ", this.state);
 
+
     //return <AppIntroSlider slides={slides} onDone={this._onDone}/>;
 
+    const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
 
     return (
-      <View style={styles.container}>
-
-      </View>
+      <SideMenu menu={menu} isOpen={this.state.isOpen}>
+      <Header
+        leftComponent={{
+          icon: 'menu',
+          color: '#fff',
+          onPress: () => {
+            this.toggleSideMenu();
+          }
+        }}
+        centerComponent={{ text: 'dMarket', style: { color: '#fff' } }}
+      />
+        <ContentView/>
+      </SideMenu>
     );
 
     /*
+    <Header
+      leftComponent={{ icon: 'menu', color: '#fff' }}
+      centerComponent={{ text: 'dMarket', style: { color: '#fff' } }}
+    />
     return (
       <View style={styles.container}>
         { !this.state.keystore ?
