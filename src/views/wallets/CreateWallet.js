@@ -39,6 +39,8 @@ const styles = StyleSheet.create({
 import Loader from '../../components/Loader';
 import EtherWallet from '../../libs/EtherWallet';
 
+import PubSub from 'pubsub-js';
+
 export default class CreateWallet extends Component {
 
    state = {
@@ -57,6 +59,8 @@ export default class CreateWallet extends Component {
    generate = (walletPassword, walletRePassword) => {
      console.log("walletPassword: ", walletPassword);
      console.log("walletRePassword: ", walletRePassword);
+
+     PubSub.publish('MY TOPIC', 'hello world!');
 
      this.setState({ generating: true });
      console.log(new EtherWallet());

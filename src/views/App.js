@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 
 import * as lightwallet from 'eth-lightwallet';
+import PubSub from 'pubsub-js';
 
 //import Web3 from 'web3';
 //const web3 = new Web3();
@@ -60,6 +61,12 @@ export default class App extends Component {
 
 
     this.toggleSideMenu = this.toggleSideMenu.bind(this);
+
+    var mySubscriber = function (msg, data) {
+      console.log( msg, data );
+    };
+
+    var token = PubSub.subscribe('MY TOPIC', mySubscriber);
   }
 
   toggleSideMenu () {
