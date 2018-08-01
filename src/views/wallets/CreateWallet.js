@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
 });
 
 import Loader from '../../components/Loader';
+import EtherWallet from '../../libs/EtherWallet';
 
 export default class CreateWallet extends Component {
 
@@ -58,6 +59,7 @@ export default class CreateWallet extends Component {
      console.log("walletRePassword: ", walletRePassword);
 
      this.setState({ generating: true });
+     console.log(new EtherWallet());
      var self = this;
      setTimeout(function(){
        self.setState({ generating: false });
