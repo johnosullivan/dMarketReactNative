@@ -27,12 +27,14 @@ import { Header, List, ListItem  } from 'react-native-elements';
 import SideMenu from 'react-native-side-menu';
 import Menu from './Menu';
 
+import CreateWallet from './wallets/CreateWallet';
+
 
 class ContentView extends Component {
   render() {
     return (
       <View style={styles.container}>
-      
+
       </View>
     );
   }
@@ -201,9 +203,13 @@ export default class App extends Component {
   render() {
     console.log("Current_State: ", this.state);
 
+    return (
+      <CreateWallet/>
+    );
 
     //return <AppIntroSlider slides={slides} onDone={this._onDone}/>;
 
+    /*
     const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
 
     return (
@@ -221,6 +227,7 @@ export default class App extends Component {
         <ContentView/>
       </SideMenu>
     );
+    */
 
     /*
     <Header
@@ -324,4 +331,4 @@ const styles = StyleSheet.create({
     borderColor: '#FFFFFF',
     borderBottomWidth: 1
   }
-})
+});
