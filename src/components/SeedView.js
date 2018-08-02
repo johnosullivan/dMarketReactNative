@@ -1,3 +1,6 @@
+// Based on https://github.com/jwohlfert23/react-native-tag-input
+// MIT LICENSE
+
 import type {
   StyleObj,
 } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
@@ -403,7 +406,6 @@ class Tag extends React.PureComponent<TagProps> {
             this.props.tagTextStyle,
           ]}>
             {this.props.label}
-            &nbsp;&times;
         </Text>
       );
     }
@@ -414,7 +416,7 @@ class Tag extends React.PureComponent<TagProps> {
         onLayout={this.onLayoutLastTag}
         style={[
           styles.tag,
-          { backgroundColor: this.props.tagColor },
+          { backgroundColor: this.props.tagColor},
           this.props.tagContainerStyle,
         ]}
       >

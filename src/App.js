@@ -6,12 +6,18 @@ import {
   StyleSheet,
   Text,
   View,
-  //Button,
+  Button,
   TextInput,
   AsyncStorage,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  Animated
 } from 'react-native';
+
+import { StackNavigator } from 'react-navigation';
+import { createTransition, FlipX, Fade, FlipY, SlideLeft, SlideRight, SlideUp, SlideDown } from 'react-native-transition';
+
+const Transition = createTransition(SlideDown);
 
 import * as lightwallet from 'eth-lightwallet';
 import PubSub from 'pubsub-js';
@@ -54,7 +60,8 @@ export default class App extends Component {
       restoring: false,
       restoreMnemonic: '',
       isOpen: true,
-      isOpen: false
+      isOpen: false,
+      seedPhrase: 'trim bacon account saddle spend spoil festival maze fit reward august elder'
     }
 
     this.password = "Simple Secret Wallet Unlock Password Which Needs To Be Stored Here"
@@ -208,15 +215,38 @@ export default class App extends Component {
         selectedItem: item,
       });
 
+  switch = () => {
+        Transition.show(
+          <View style={{ flex: 1, alignItems: 'center', padding:50 }}>
+            <Text>This is another view</Text>
+            <Button title="Press to Switch" onPress={this.switchBack} />
+          </View>
+        );
+      }
+
+      switchBack = () => {
+            Transition.show(
+              <View style={{ flex: 1, alignItems: 'center', padding:50 }}>
+                <Text>This the initial View</Text>
+                <Button title="Press to Switch" onPress={this.switch} />
+              </View>
+            );
+          }
+
   render() {
     console.log("Current_State: ", this.state);
 
     return (
-      <ShowSeed/>
+      <Transition>
+        <View style={{ flex: 1, alignItems: 'center', padding:50 }}>
+          <Text>This the initial View</Text>
+          <Button title="Press to Switch" onPress={this.switch} />
+        </View>
+      </Transition>
     );
 
     //return <AppIntroSlider slides={slides} onDone={this._onDone}/>;
-
+    //<ShowSeed seedPhrase={this.state.seedPhrase}/>
     /*
     const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
 
