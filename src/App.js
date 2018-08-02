@@ -1,5 +1,5 @@
 // Required for eth-lightwallet
-import './../../shim.js'
+import './../shim.js'
 import React, { Component } from 'react';
 import {
   Platform,
@@ -20,16 +20,17 @@ import PubSub from 'pubsub-js';
 //const web3 = new Web3();
 //web3.setProvider(new web3.providers.HttpProvider('https://ropsten.infura.io/'));
 //console.log(Web3);
+
 import AppIntroSlider from 'react-native-app-intro-slider';
-import { slides } from '../../intro/introslides';
+import { slides } from '../intro/introslides';
 
 import { Header, List, ListItem  } from 'react-native-elements';
 
 import SideMenu from 'react-native-side-menu';
-import Menu from './Menu';
+import Menu from './views/Menu';
 
-import CreateWallet from './wallets/CreateWallet';
-
+import CreateWallet from './views/wallets/CreateWallet';
+import ShowSeed from './views/wallets/ShowSeed';
 
 class ContentView extends Component {
   render() {
@@ -211,7 +212,7 @@ export default class App extends Component {
     console.log("Current_State: ", this.state);
 
     return (
-      <CreateWallet/>
+      <ShowSeed/>
     );
 
     //return <AppIntroSlider slides={slides} onDone={this._onDone}/>;
