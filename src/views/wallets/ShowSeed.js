@@ -11,6 +11,8 @@ import {
 
 import SeedView from '../../components/SeedView';
 
+import { Overlay } from 'react-native-elements';
+
 const styles = StyleSheet.create({
    container: {
       padding: 23,
@@ -47,6 +49,17 @@ const styles = StyleSheet.create({
    image: {
      height: 155,
      width: 155
+   },
+   submitButton: {
+      backgroundColor: '#5aaba1',
+      padding: 10,
+      margin: 15,
+      height: 40,
+      borderRadius: 5,
+      alignItems: 'center'
+   },
+   submitButtonText:{
+      color: 'white'
    }
 });
 
@@ -59,7 +72,8 @@ export default class ShowSeed extends Component {
    state = {
      seedPhrase: this.props.seedPhrase,
      seedWords: [],
-     text: " "
+     text: " ",
+     isVisible: true
    };
 
    done = () => {
@@ -95,11 +109,6 @@ export default class ShowSeed extends Component {
 
         </View>
 
-        <Text style={{
-          color: 'white',
-          fontWeight: 'bold'
-        }}> Seed Phrase </Text>
-
         <SeedView
  value={seeds}
  onChange={(seedWords) => this.setState({ seedWords })}
@@ -119,6 +128,40 @@ export default class ShowSeed extends Component {
    }>
    <Text style = {styles.doneButtonText}> Finish </Text>
 </TouchableOpacity>
+
+
+<Overlay
+fullScreen={false}
+isVisible={this.state.isVisible}
+height={320}>
+<Text style={{
+  fontSize: 20,
+  fontWeight: 'bold',
+  paddingBottom: 5
+}}>What is a Seed Phrase?</Text>
+
+<Text>
+A mnemonic phrase, mnemonic recovery phrase
+or mnemonic seed is a list of words which store all the
+information needed to recover a Ethereum wallet. Wallet software
+will typically generate a mnemonic backup phrase and instruct
+the user to write it down on paper. If the user’s computer breaks
+or their hard drive becomes corrupted, they can download the
+same wallet software again and use the paper backup to
+get their ethereum back. By continuing you understand dMarket
+cannot recover your transactions and funds if you lose your
+seeds phrase.
+</Text>
+
+<TouchableOpacity
+style = {styles.submitButton}
+onPress = {
+() => this.setState({isVisible: false})
+}>
+<Text style = {styles.submitButtonText}> I Understand </Text>
+</TouchableOpacity>
+
+</Overlay>
 
          </View>
       );

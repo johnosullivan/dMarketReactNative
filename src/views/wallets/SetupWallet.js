@@ -34,7 +34,7 @@ export default class SetupWallet extends Component {
        <ShowSeed seedPhrase={seedPhrase}/>
      );
    }
-
+   //<CreateWallet created={this.created}/>
    render() {
       return (
          <View style = {styles.container}>
