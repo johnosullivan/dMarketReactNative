@@ -17,7 +17,36 @@ import {
 import { StackNavigator } from 'react-navigation';
 import { createTransition, FlipX, Fade, FlipY, SlideLeft, SlideRight, SlideUp, SlideDown } from 'react-native-transition';
 
-const Transition = createTransition(SlideDown);
+const Brooom = {
+  out: (value, bounds) => ({
+    left: value.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, -bounds.width],
+    }),
+    width: bounds.width,
+    transform: [{
+      skewX: value.interpolate({
+        inputRange: [0, 0.1, 0.9, 1],
+        outputRange: ["0deg", "-20deg", "-20deg", "0deg"],
+      }),
+    }],
+  }),
+  in: (value, bounds) => ({
+    left: value.interpolate({
+      inputRange: [0, 1],
+      outputRange: [bounds.width, 0],
+    }),
+    width: bounds.width,
+    transform: [{
+      skewX: value.interpolate({
+        inputRange: [0, 0.1, 0.9, 1],
+        outputRange: ["0deg", "-20deg", "-20deg", "0deg"],
+      }),
+    }],
+  }),
+};
+
+const Transition = createTransition(SlideLeft);
 
 import * as lightwallet from 'eth-lightwallet';
 import PubSub from 'pubsub-js';
@@ -37,6 +66,8 @@ import Menu from './views/Menu';
 
 import CreateWallet from './views/wallets/CreateWallet';
 import ShowSeed from './views/wallets/ShowSeed';
+
+import SetupWallet from './views/wallets/SetupWallet';
 
 class ContentView extends Component {
   render() {
@@ -237,12 +268,7 @@ export default class App extends Component {
     console.log("Current_State: ", this.state);
 
     return (
-      <Transition>
-        <View style={{ flex: 1, alignItems: 'center', padding:50 }}>
-          <Text>This the initial View</Text>
-          <Button title="Press to Switch" onPress={this.switch} />
-        </View>
-      </Transition>
+      <SetupWallet/>
     );
 
     //return <AppIntroSlider slides={slides} onDone={this._onDone}/>;

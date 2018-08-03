@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
       backgroundColor: "#5A8DAB",
       justifyContent: 'center',
       alignItems: 'center',
-      paddingBottom: 20
+      paddingBottom: 10
    },
    seed: {
       backgroundColor: "#5aaba1",
@@ -70,28 +70,37 @@ export default class ShowSeed extends Component {
 
       console.log("props: ", this.props);
 
+      /*
+      <Text style={{
+        color: 'red',
+        fontWeight: 'bold'
+      }}>
+        Please write these words down on a peice of paper and put
+        it in a safe place. This seed phrase will allow you to recover your wallet
+        in the future. If you lose this seed phrase your wallet funds and its contracts
+        will be lost forever.
+      </Text>
+      */
+
       const seeds = this.state.seedPhrase.split(" ");
 
       return (
-         <View style = {styles.container}>
+        <View style = {styles.container}>
 
-         <View style = {styles.container_img}>
-         <Image
-          source={require('../../../assets/safe-in.png')}
+        <View style = {styles.container_img}>
+        <Image
+          source={require('../../../assets/shield.png')}
           style = {styles.image}
         />
-        <Text style={{
-          color: 'red',
-          fontWeight: 'bold'
-        }}>
-          Please write these words down on a peice of paper and put
-          it in a safe place. This seed phrase will allow you to recover your wallet
-          in the future. If you lose this seed phrase your wallet funds and its contracts
-          will be lost forever.
-        </Text>
+
         </View>
 
-         <SeedView
+        <Text style={{
+          color: 'white',
+          fontWeight: 'bold'
+        }}> Seed Phrase </Text>
+
+        <SeedView
  value={seeds}
  onChange={(seedWords) => this.setState({ seedWords })}
  labelExtractor={(word) => word}
