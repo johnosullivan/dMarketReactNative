@@ -17,7 +17,25 @@ import Loader from '../../components/Loader';
 import EtherWallet from '../../libs/EtherWallet';
 import PubSub from 'pubsub-js';
 
+const Slide = {
+  out: (value, bounds) => ({
+    left: value.interpolate({
+      inputValue: [0, 1],
+      outputValue: [0, -bounds.width],
+    }),
+    width: bounds.width,
+  }),
+  in: (value, bounds) => ({
+    left: value.interpolate({
+      inputValue: [0, 1],
+      outputValue: [bounds.width, 0],
+    }),
+    width: bounds.width,
+  }),
+};
+
 var Transition = createTransition(SlideLeft);
+
 const styles = StyleSheet.create({
    container: {
       paddingTop: 25,
@@ -54,6 +72,17 @@ const styles = StyleSheet.create({
    image: {
      height: 155,
      width: 155
+   },
+   cancelButton: {
+      backgroundColor: '#5A8DAB',
+      padding: 10,
+      margin: 15,
+      height: 40,
+      borderRadius: 5,
+      alignItems: 'center'
+   },
+   cancelButtonText:{
+      color: 'white'
    }
 });
 
@@ -111,11 +140,70 @@ export default class CreateWallet extends Component {
             onPress = { () => this.generate() }>
           <Text style = {styles.submitButtonText}> Generate Wallet </Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style = {styles.cancelButton}
+            onPress = { () => this.optionsOpt() }>
+          <Text style = {styles.cancelButtonText}> Go Back </Text>
+          </TouchableOpacity>
        </View>
      );
    }
 
-   generateOpt = () => { Transition.show(this.generateView()); };
+   allOptions = () => {
+     return (
+       <View>
+       <Button title='Generate Wallet'
+       raised={true}
+       style={{
+         padding: 10,
+         paddingTop: 20
+       }}
+       titleStyle={{ fontWeight: "300", fontSize: 15 }}
+       buttonStyle={{
+         backgroundColor: "#5aaba1"
+       }}
+       onPress = {
+          () => this.generateOpt()
+       }/>
+
+       <Button title='Restore Wallet'
+       raised={false}
+       style={{
+         padding: 10,
+         paddingTop: 20
+       }}
+       titleStyle={{ fontWeight: "300", fontSize: 15 }}
+       buttonStyle={{
+         backgroundColor: "#5aaba1",
+       }}/>
+
+       <Button title='Import Wallet'
+       raised={false}
+       style={{
+         padding: 10,
+         paddingTop: 20
+       }}
+       titleStyle={{ fontWeight: "300", fontSize: 15 }}
+       buttonStyle={{
+         backgroundColor: "#5aaba1",
+       }}/>
+       </View>
+     );
+   }
+
+   generateOpt = () => {
+     Transition.show(
+       this.generateView(),
+       SlideLeft
+     );
+   };
+
+   optionsOpt = () => {
+     Transition.show(
+       this.allOptions(),
+       SlideRight
+     );
+   }
 
    render() {
       return (
@@ -125,45 +213,11 @@ export default class CreateWallet extends Component {
             <Image source={require('../../../assets/wallet.png')} style = {styles.image} />
             </View>
 
-            {this.generateView()}
-            {/*
+
             <Transition>
-            <View>
-            <Button title='Generate Wallet'
-            raised={false}
-            style={{
-              padding: 10,
-              paddingTop: 20
-            }}
-            buttonStyle={{
-              backgroundColor: "#5aaba1",
-            }}
-            onPress = {
-               () => this.generateOpt()
-            }/>
-
-            <Button title='Restore Wallet'
-            raised={false}
-            style={{
-              padding: 10,
-              paddingTop: 20
-            }}
-            buttonStyle={{
-              backgroundColor: "#5aaba1",
-            }}/>
-
-            <Button title='Import Wallet'
-            raised={false}
-            style={{
-              padding: 10,
-              paddingTop: 20
-            }}
-            buttonStyle={{
-              backgroundColor: "#5aaba1",
-            }}/>
-            </View>
+            { this.allOptions() }
             </Transition>
-            */}
+
 
 
 
