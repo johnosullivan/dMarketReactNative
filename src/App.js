@@ -83,6 +83,7 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      applicationRunning: false,
       error: null,
       keystore: false,
       mnemonic: null,
@@ -268,25 +269,33 @@ export default class App extends Component {
           }
 
   render() {
-    console.log("Current_State: ", this.state);
+    console.log("Application Current State: ", this.state);
     const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
 
-    return (
-      <SideMenu menu={menu} isOpen={this.state.isOpen}>
-      <Header
-        leftComponent={{
-          icon: 'menu',
-          color: '#fff',
-          onPress: () => {
-            this.toggleSideMenu();
-          }
-        }}
 
-      />
-        <ContentView/>
-      </SideMenu>
+
+
+
+    return (
+      <View>
+
+      </View>
     );
 /*
+
+<SideMenu menu={menu} isOpen={this.state.isOpen}>
+<Header
+  leftComponent={{
+    icon: 'menu',
+    color: '#fff',
+    onPress: () => {
+      this.toggleSideMenu();
+    }
+  }}
+
+/>
+  <ContentView/>
+</SideMenu>
 
 centerComponent={{ text: 'dMarket', style: {
    color: '#fff',
