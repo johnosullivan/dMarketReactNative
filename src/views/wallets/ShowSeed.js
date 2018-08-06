@@ -11,7 +11,7 @@ import {
 
 import SeedView from '../../components/SeedView';
 
-import { Overlay } from 'react-native-elements';
+import { Overlay, Button, Icon } from 'react-native-elements';
 
 const styles = StyleSheet.create({
    container: {
@@ -133,7 +133,7 @@ export default class ShowSeed extends Component {
 <Overlay
 fullScreen={false}
 isVisible={this.state.isVisible}
-height={320}>
+height={340}>
 <Text style={{
   fontSize: 20,
   fontWeight: 'bold',
@@ -153,13 +153,19 @@ cannot recover your transactions and funds if you lose your
 seeds phrase.
 </Text>
 
-<TouchableOpacity
-style = {styles.submitButton}
+<Button title='I Understand'
+raised={false}
+style={{
+  padding: 10,
+  paddingTop: 20
+}}
+titleStyle={{ fontWeight: "300", fontSize: 15 }}
+buttonStyle={{
+  backgroundColor: "#5aaba1",
+}}
 onPress = {
-() => this.setState({isVisible: false})
-}>
-<Text style = {styles.submitButtonText}> I Understand </Text>
-</TouchableOpacity>
+   () => this.setState({isVisible: false})
+}/>
 
 </Overlay>
 

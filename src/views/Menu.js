@@ -12,12 +12,28 @@ import {
 const window = Dimensions.get('window');
 const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';
 
+
+import { List, ListItem } from 'react-native-elements'
+
+const list = [
+  {
+    name: 'Amy Farha',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    subtitle: 'Vice President'
+  },
+  {
+    name: 'Chris Jackson',
+    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    subtitle: 'Vice Chairman'
+  }
+]
+
 const styles = StyleSheet.create({
   menu: {
     flex: 1,
     width: window.width,
     height: window.height,
-    backgroundColor: 'gray',
+    backgroundColor: '#b5c3cb',
     padding: 20,
   },
   avatarContainer: {
@@ -42,30 +58,19 @@ const styles = StyleSheet.create({
   },
 });
 
+/*
+<Text
+  onPress={() => onItemSelected('About')}
+  style={styles.item}
+>
+  About
+</Text>
+*/
+
 export default function Menu({ onItemSelected }) {
   return (
     <ScrollView scrollsToTop={false} style={styles.menu}>
-      <View style={styles.avatarContainer}>
-        <Image
-          style={styles.avatar}
-          source={{ uri }}
-        />
-        <Text style={styles.name}>Your name</Text>
-      </View>
 
-      <Text
-        onPress={() => onItemSelected('About')}
-        style={styles.item}
-      >
-        About
-      </Text>
-
-      <Text
-        onPress={() => onItemSelected('Contacts')}
-        style={styles.item}
-      >
-        Contacts
-      </Text>
     </ScrollView>
   );
 }

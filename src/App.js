@@ -95,7 +95,7 @@ export default class App extends Component {
       seedPhrase: 'trim bacon account saddle spend spoil festival maze fit reward august elder'
     }
 
-    this.password = "Simple Secret Wallet Unlock Password Which Needs To Be Stored Here"
+    this.password = "mypassword2018"
     this.keystore = null
 
 
@@ -115,8 +115,8 @@ export default class App extends Component {
 }
 
   componentWillMount() {
-    this._loadKeystore()
-
+    this.loadKeystore();
+    //this._generateNewWallet();
     /*const balance = web3.eth.getBalance('0x1aCc2977D4C4C8AcF2e87840ea1432248AEfeEA7', (err2, balance) => {
        console.log('Balance ' + balance);
        this.setState({balance: 'Balance: ' + balance});
@@ -137,7 +137,7 @@ export default class App extends Component {
     }
   }
 
-  _loadKeystore = async () => {
+  loadKeystore = async () => {
     try {
       const keystore = await AsyncStorage.getItem('WalletKeystore')
       if (!keystore) return
@@ -146,7 +146,8 @@ export default class App extends Component {
       if (keystore) this.setState({
         keystore: true,
         generating: false,
-        address: ks.addresses[0]
+        address: ks.addresses[0],
+        ks: ks
       })
 
       this.keystore = ks
@@ -170,7 +171,7 @@ export default class App extends Component {
   _generateNewWallet = () => {
     this.setState({ generating: true })
 
-    const mnemonic = lightwallet.keystore.generateRandomSeed('insert random entropy generation')
+    const mnemonic = lightwallet.keystore.generateRandomSeed('JKCGNQc7aewS5AhfGURWdXYfS4c1w7OxK7dxihFbFJpgT5lINDkqtRyMgFQz9sH')
 
     this.setState({ mnemonic })
 
@@ -236,8 +237,10 @@ export default class App extends Component {
     this.setState({ restoring: true })
   }
 
-  _onDone = () => {
-    console.log("_onDone");
+  onDoneIntro = () => {
+    Transition.show(
+      <SetupWallet/>
+    );
   }
 
   onMenuItemSelected = item =>
@@ -266,14 +269,6 @@ export default class App extends Component {
 
   render() {
     console.log("Current_State: ", this.state);
-
-    return (
-      <SetupWallet/>
-    );
-
-    //return <AppIntroSlider slides={slides} onDone={this._onDone}/>;
-    //<ShowSeed seedPhrase={this.state.seedPhrase}/>
-    /*
     const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
 
     return (
@@ -286,11 +281,27 @@ export default class App extends Component {
             this.toggleSideMenu();
           }
         }}
-        centerComponent={{ text: 'dMarket', style: { color: '#fff' } }}
+
       />
         <ContentView/>
       </SideMenu>
     );
+/*
+
+centerComponent={{ text: 'dMarket', style: {
+   color: '#fff',
+   fontWeight: "500",
+   fontSize: 17
+} }}
+    return (
+      <Transition>
+        <SetupWallet/>
+      </Transition>
+    );*/
+
+    //return <AppIntroSlider slides={slides} onDone={this._onDone}/>;
+    //<ShowSeed seedPhrase={this.state.seedPhrase}/>
+    /*
     */
 
     /*
@@ -375,7 +386,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#eee',
     paddingLeft: 15,
     paddingRight: 15
   },
