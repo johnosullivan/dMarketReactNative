@@ -59,7 +59,7 @@ import PubSub from 'pubsub-js';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { slides } from '../intro/introslides';
 
-import { Header, List, ListItem  } from 'react-native-elements';
+import { Header, List, ListItem, CheckBox  } from 'react-native-elements';
 
 import SideMenu from 'react-native-side-menu';
 import Menu from './views/Menu';
@@ -73,6 +73,7 @@ class ContentView extends Component {
   render() {
     return (
       <View style={styles.container}>
+
 
       </View>
     );
@@ -239,9 +240,11 @@ export default class App extends Component {
   }
 
   onDoneIntro = () => {
+    /*
     Transition.show(
       <SetupWallet/>
     );
+    */
   }
 
   onMenuItemSelected = item =>
@@ -268,19 +271,46 @@ export default class App extends Component {
             );
           }
 
+  isSetupAlready = () => {
+    return false;
+  }
+
   render() {
     console.log("Application Current State: ", this.state);
     const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
 
+    if (this.isSetupAlready) {
+      return (
+        <AppIntroSlider slides={slides} onDone={this.onDoneIntro}/>
+      );
+    } else {
+      return (
+        <AppIntroSlider slides={slides} onDone={this.onDoneIntro}/>
+      );
+    }
 
+    /*
+    if (this.state.applicationRunning) {
 
+    } else {
+      return (
+        <SideMenu menu={menu} isOpen={this.state.isOpen}>
+        <Header
+          leftComponent={{
+            icon: 'menu',
+            color: '#fff',
+            onPress: () => {
+              this.toggleSideMenu();
+            }
+          }}
 
+        />
+          <ContentView/>
+        </SideMenu>
+      );
+    }
+    */
 
-    return (
-      <View>
-
-      </View>
-    );
 /*
 
 <SideMenu menu={menu} isOpen={this.state.isOpen}>
