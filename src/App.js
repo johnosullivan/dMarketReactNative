@@ -11,7 +11,9 @@ import {
   AsyncStorage,
   Image,
   TouchableHighlight,
-  Animated
+  Animated,
+  TouchableOpacity,
+  Modal
 } from 'react-native';
 
 import { StackNavigator } from 'react-navigation';
@@ -33,6 +35,7 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 import { slides } from '../intro/introslides';
 
 import { Header, List, ListItem, CheckBox  } from 'react-native-elements';
+import { Header, List, ListItem, CheckBox, Icon  } from 'react-native-elements';
 
 import SideMenu from 'react-native-side-menu';
 import Menu from './views/Menu';
@@ -67,7 +70,8 @@ export default class App extends Component {
       restoreMnemonic: '',
       isOpen: true,
       isOpen: false,
-      seedPhrase: 'trim bacon account saddle spend spoil festival maze fit reward august elder'
+      seedPhrase: 'trim bacon account saddle spend spoil festival maze fit reward august elder',
+      modalVisible: false
     }
 
     this.password = "mypassword2018"
@@ -81,6 +85,10 @@ export default class App extends Component {
     };
 
     var token = PubSub.subscribe('MY TOPIC', mySubscriber);
+  }
+
+  setModalVisible = (visible) => {
+    this.setState({modalVisible: visible});
   }
 
   toggleSideMenu () {
@@ -236,6 +244,10 @@ export default class App extends Component {
             );
           }
 
+  updateMenuState = (isOpen) => {
+    this.setState({ isOpen });
+  }
+
   isSetupAlready = () => {
     return true;
   }
@@ -251,23 +263,83 @@ export default class App extends Component {
   mainApplicationView = () => {
     const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
     return (
-      <Transition>
-        <SideMenu menu={menu} isOpen={this.state.isOpen}>
+        <SideMenu
+          menu={menu}
+          isOpen={this.state.isOpen}
+          onChange={isOpen => this.updateMenuState(isOpen)}
+        >
         <Header
-          leftComponent={{
-            icon: 'menu',
-            color: '#fff',
-            onPress: () => {
-            this.toggleSideMenu();
-            }
-          }}
+          leftComponent={<TouchableOpacity>
+  <Icon
+    name='menu'
+    style={styles.icon}
+    color='white'
+    onPress={() => this.toggleSideMenu()}
+  />
+</TouchableOpacity>}
+rightComponent={
+  <TouchableOpacity onPress={() => {
+    this.setModalVisible(!this.state.modalVisible);
+  }}>
+    <Text style={{ color:'white' }}>TXS</Text>
+  </TouchableOpacity>}
+        />
 
-      />
+
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}>
+          <View>
+          <Header
+            backgroundColor="#65737e"
+            centerComponent={{ text: 'My Transactions', style: { color: '#fff', fontSize: 15 } }}
+            rightComponent={
+              <TouchableOpacity>
+                <Icon
+                  name='close'
+                  style={styles.icon}
+                  color='white'
+                  onPress={() => {
+                    this.setModalVisible(!this.state.modalVisible);
+                  }}
+                />
+              </TouchableOpacity>}
+            leftComponent={
+              <TouchableOpacity>
+                <Icon
+                  name='edit'
+                  style={styles.icon}
+                  color='white'
+                  onPress={() => {
+
+                  }}
+                />
+              </TouchableOpacity>}
+          />
+          <View>
+
+
+            </View>
+          </View>
+        </Modal>
+
+
+
         <ContentView/>
       </SideMenu>
-      </Transition>
     );
   }
+
+  /*
+  {
+    icon: 'menu',
+    color: '#fff',
+    onPress: () => {
+      this.toggleSideMenu();
+    }
+  }
+  */
 
   //Intro view for the application
   introApplicationView = () => {
@@ -280,15 +352,10 @@ export default class App extends Component {
 
   render() {
     logging("Application Current State: ", this.state);
-
     if (this.isSetupAlready()) {
-      { this.mainApplicationView() }
+      return this.mainApplicationView();
     } else {
-      return(
-        <Transition>
-          <AppIntroSlider slides={slides} onDone={this.onDoneIntro}/>
-        </Transition>
-      );
+      return this.introApplicationView();
     }
   }
 
@@ -302,6 +369,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
     paddingLeft: 15,
     paddingRight: 15
+  },
+  icon: {
+
   },
   text: {
     color: '#FFFFFF',
