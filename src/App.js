@@ -17,39 +17,12 @@ import {
 import { StackNavigator } from 'react-navigation';
 import { createTransition, FlipX, Fade, FlipY, SlideLeft, SlideRight, SlideUp, SlideDown } from 'react-native-transition';
 
-const Brooom = {
-  out: (value, bounds) => ({
-    left: value.interpolate({
-      inputRange: [0, 1],
-      outputRange: [0, -bounds.width],
-    }),
-    width: bounds.width,
-    transform: [{
-      skewX: value.interpolate({
-        inputRange: [0, 0.1, 0.9, 1],
-        outputRange: ["0deg", "-20deg", "-20deg", "0deg"],
-      }),
-    }],
-  }),
-  in: (value, bounds) => ({
-    left: value.interpolate({
-      inputRange: [0, 1],
-      outputRange: [bounds.width, 0],
-    }),
-    width: bounds.width,
-    transform: [{
-      skewX: value.interpolate({
-        inputRange: [0, 0.1, 0.9, 1],
-        outputRange: ["0deg", "-20deg", "-20deg", "0deg"],
-      }),
-    }],
-  }),
-};
-
 const Transition = createTransition(SlideLeft);
 
 import * as lightwallet from 'eth-lightwallet';
 import PubSub from 'pubsub-js';
+
+import { logging } from './libs/Logger';
 
 //import Web3 from 'web3';
 //const web3 = new Web3();
@@ -117,7 +90,7 @@ export default class App extends Component {
 }
 
   componentWillMount() {
-    this.loadKeystore();
+    //this.loadKeystore();
     //this._generateNewWallet();
     /*const balance = web3.eth.getBalance('0x1aCc2977D4C4C8AcF2e87840ea1432248AEfeEA7', (err2, balance) => {
        console.log('Balance ' + balance);
@@ -239,14 +212,6 @@ export default class App extends Component {
     this.setState({ restoring: true })
   }
 
-  onDoneIntro = () => {
-    /*
-    Transition.show(
-      <SetupWallet/>
-    );
-    */
-  }
-
   onMenuItemSelected = item =>
       this.setState({
         isOpen: false,
@@ -272,150 +237,59 @@ export default class App extends Component {
           }
 
   isSetupAlready = () => {
-    return false;
+    return true;
   }
 
-  render() {
-    console.log("Application Current State: ", this.state);
+  //Loads the SetupWallet either from seeds phrase or generate
+  onDoneIntro = () => {
+    Transition.show(
+      <SetupWallet/>
+    );
+  }
+
+  //Main view for the application
+  mainApplicationView = () => {
     const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
-
-    if (this.isSetupAlready) {
-      return (
-        <AppIntroSlider slides={slides} onDone={this.onDoneIntro}/>
-      );
-    } else {
-      return (
-        <AppIntroSlider slides={slides} onDone={this.onDoneIntro}/>
-      );
-    }
-
-    /*
-    if (this.state.applicationRunning) {
-
-    } else {
-      return (
+    return (
+      <Transition>
         <SideMenu menu={menu} isOpen={this.state.isOpen}>
         <Header
           leftComponent={{
             icon: 'menu',
             color: '#fff',
             onPress: () => {
-              this.toggleSideMenu();
+            this.toggleSideMenu();
             }
           }}
 
-        />
-          <ContentView/>
-        </SideMenu>
-      );
-    }
-    */
+      />
+        <ContentView/>
+      </SideMenu>
+      </Transition>
+    );
+  }
 
-/*
-
-<SideMenu menu={menu} isOpen={this.state.isOpen}>
-<Header
-  leftComponent={{
-    icon: 'menu',
-    color: '#fff',
-    onPress: () => {
-      this.toggleSideMenu();
-    }
-  }}
-
-/>
-  <ContentView/>
-</SideMenu>
-
-centerComponent={{ text: 'dMarket', style: {
-   color: '#fff',
-   fontWeight: "500",
-   fontSize: 17
-} }}
+  //Intro view for the application
+  introApplicationView = () => {
     return (
       <Transition>
-        <SetupWallet/>
+        <AppIntroSlider slides={slides} onDone={this.onDoneIntro}/>
       </Transition>
-    );*/
+    );
+  }
 
-    //return <AppIntroSlider slides={slides} onDone={this._onDone}/>;
-    //<ShowSeed seedPhrase={this.state.seedPhrase}/>
-    /*
-    */
+  render() {
+    logging("Application Current State: ", this.state);
 
-    /*
-    <Header
-      leftComponent={{ icon: 'menu', color: '#fff' }}
-      centerComponent={{ text: 'dMarket', style: { color: '#fff' } }}
-    />
-    return (
-      <View style={styles.container}>
-        { !this.state.keystore ?
-          <View>
-            { !this.state.generating ?
-              <View>
-                { !this.state.restoring ?
-                  <View>
-                    <View style={styles.generateButton}>
-                      <Button
-                        onPress={this._generateNewWallet}
-                        title="Generate New Wallet"
-                        accessibilityLabel="Click to generate wallet"
-                      />
-                    </View>
-                    <Button
-                      onPress={this._stateRestore}
-                      title="Restore Existing Wallet"
-                      accessibilityLabel="Click to restore wallet from nmemonic"
-                    />
-                  </View>
-                  :
-                  <View>
-                    <TextInput
-                      style={{height: 40, width: 300, color: 'white', borderColor: 'white', borderBottomWidth: 1}}
-                      autoFocus={true}
-                      onChangeText={(restoreMnemonic) => this.setState({ restoreMnemonic })}
-                      onSubmitEditing={this._generateFromMnemonic}
-                      value={this.state.restoreMnemonic}
-                    />
-                  </View>
-                }
-              </View>
-              :
-              <Text style={styles.text}>
-                {(this.state.restoring) ? 'Restoring' : 'Generating' } wallet...
-              </Text>
-            }
-          </View>
-          :
-          <View>
-            <Text style={[styles.text, {textAlign: 'center'}]}>
-              Keystore loaded...
-            </Text>
-            <Text style={[styles.text, {fontSize: 14, marginBottom: 20}]}>
-                Address: {'\n'}
-                {this.state.address}
-            </Text>
-            { this.state.mnemonic ?
-              <View>
-                <Text style={[styles.text, {fontSize: 12, marginBottom: 10, fontWeight: 'bold'}]}>
-                    Safely copy and paste or screenshot mnemonic below:
-                </Text>
-                <Text selectable={true} style={[styles.text, {fontSize: 14}]}>
-                    {this.state.mnemonic}
-                </Text>
-              </View>
-              : null
-            }
-            <Button
-              onPress={this._deleteKeystore}
-              title="Delete Wallet"
-              accessibilityLabel="Click to delete wallet"
-            />
-          </View>
-        }
-      </View>
-    )*/
+    if (this.isSetupAlready()) {
+      { this.mainApplicationView() }
+    } else {
+      return(
+        <Transition>
+          <AppIntroSlider slides={slides} onDone={this.onDoneIntro}/>
+        </Transition>
+      );
+    }
   }
 
 }
