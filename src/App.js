@@ -11,9 +11,11 @@ import {
   AsyncStorage,
   Image,
   TouchableHighlight,
+  TouchableWithoutFeedback,
   Animated,
   TouchableOpacity,
-  Modal
+  Modal,
+  ListView
 } from 'react-native';
 
 import { StackNavigator } from 'react-navigation';
@@ -26,6 +28,8 @@ import PubSub from 'pubsub-js';
 
 import { logging } from './libs/Logger';
 
+import TxRow from './components/TxRow';
+
 //import Web3 from 'web3';
 //const web3 = new Web3();
 //web3.setProvider(new web3.providers.HttpProvider('https://ropsten.infura.io/'));
@@ -34,7 +38,6 @@ import { logging } from './libs/Logger';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { slides } from '../intro/introslides';
 
-import { Header, List, ListItem, CheckBox  } from 'react-native-elements';
 import { Header, List, ListItem, CheckBox, Icon  } from 'react-native-elements';
 
 import SideMenu from 'react-native-side-menu';
@@ -59,6 +62,11 @@ class ContentView extends Component {
 export default class App extends Component {
   constructor(props) {
     super(props)
+
+
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
+
     this.state = {
       applicationRunning: false,
       error: null,
@@ -71,7 +79,8 @@ export default class App extends Component {
       isOpen: true,
       isOpen: false,
       seedPhrase: 'trim bacon account saddle spend spoil festival maze fit reward august elder',
-      modalVisible: false
+      modalVisible: false,
+      dataSource: ds.cloneWithRows(['row 1', 'row 2'])
     }
 
     this.password = "mypassword2018"
@@ -272,6 +281,7 @@ export default class App extends Component {
           leftComponent={<TouchableOpacity>
   <Icon
     name='menu'
+    underlayColor='rgba(255, 255, 255, .0)'
     style={styles.icon}
     color='white'
     onPress={() => this.toggleSideMenu()}
@@ -298,6 +308,7 @@ rightComponent={
               <TouchableOpacity>
                 <Icon
                   name='close'
+                  underlayColor='rgba(255, 255, 255, .0)'
                   style={styles.icon}
                   color='white'
                   onPress={() => {
@@ -309,6 +320,7 @@ rightComponent={
               <TouchableOpacity>
                 <Icon
                   name='edit'
+                  underlayColor='rgba(255, 255, 255, .0)'
                   style={styles.icon}
                   color='white'
                   onPress={() => {
@@ -319,14 +331,19 @@ rightComponent={
           />
           <View>
 
-
             </View>
           </View>
         </Modal>
 
+        { /* Body of the transactions list */ }
+
+        <ListView
+        style={styles.container_list}
+        dataSource={this.state.dataSource}
+        renderRow={(rowData) => <TxRow/>}
+      />
 
 
-        <ContentView/>
       </SideMenu>
     );
   }
@@ -369,6 +386,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
     paddingLeft: 15,
     paddingRight: 15
+  },
+  container_list: {
+    flex: 1,
+    backgroundColor: '#eee',
   },
   icon: {
 
