@@ -1,5 +1,12 @@
 // Required for eth-lightwallet
+
+var bluebird = require('bluebird');
+//require('babel/polyfill');
+
 import './../shim.js'
+import 'babel-preset-react-native-web3/globals';
+import Web3 from 'web3';
+
 import React, { Component } from 'react';
 import {
   Platform,
@@ -31,9 +38,7 @@ import { logging } from './libs/Logger';
 import TxRow from './components/TxRow';
 
 //import Web3 from 'web3';
-//const web3 = new Web3();
-//web3.setProvider(new web3.providers.HttpProvider('https://ropsten.infura.io/'));
-//console.log(Web3);
+var web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io'))
 
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { slides } from '../intro/introslides';
@@ -60,6 +65,9 @@ class ContentView extends Component {
 }
 
 export default class App extends Component {
+
+
+
   constructor(props) {
     super(props)
 
@@ -80,7 +88,7 @@ export default class App extends Component {
       isOpen: false,
       seedPhrase: 'trim bacon account saddle spend spoil festival maze fit reward august elder',
       modalVisible: false,
-      dataSource: ds.cloneWithRows(['row 1', 'row 2'])
+      dataSource: ds.cloneWithRows([{ss:""}, {}])
     }
 
     this.password = "mypassword2018"
@@ -94,7 +102,17 @@ export default class App extends Component {
     };
 
     var token = PubSub.subscribe('MY TOPIC', mySubscriber);
+
+
+    //var web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io'))
+    const web3Provider = new Web3.providers.HttpProvider('https://rinkeby.infura.io');
+    this.web3 = new Web3(web3Provider);
+    console.log("web3: ", this.web3);
   }
+
+  test = () => {
+    console.log("john was here");
+  };
 
   setModalVisible = (visible) => {
     this.setState({modalVisible: visible});
@@ -107,6 +125,10 @@ export default class App extends Component {
 }
 
   componentWillMount() {
+
+
+//console.log("connected: ", web3.isConnected());
+  //web3.eth.getBlock('latest').then(console.log)
     //this.loadKeystore();
     //this._generateNewWallet();
     /*const balance = web3.eth.getBalance('0x1aCc2977D4C4C8AcF2e87840ea1432248AEfeEA7', (err2, balance) => {
@@ -268,6 +290,8 @@ export default class App extends Component {
     );
   }
 
+
+
   //Main view for the application
   mainApplicationView = () => {
     const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
@@ -336,14 +360,18 @@ rightComponent={
         </Modal>
 
         { /* Body of the transactions list */ }
-
-        <ListView
+{/*
+      <ListView
         style={styles.container_list}
         dataSource={this.state.dataSource}
-        renderRow={(rowData) => <TxRow/>}
+        renderRow={(rowData) => <TxRow {...rowData}/>}
+        renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
       />
+*/}
 
-
+<View style={styles.container}>
+<Button title="Press to Switch" onPress={this.test} />
+</View>
       </SideMenu>
     );
   }
@@ -390,6 +418,11 @@ const styles = StyleSheet.create({
   container_list: {
     flex: 1,
     backgroundColor: '#eee',
+  },
+  separator: {
+    flex: 1,
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: '#8E8E8E',
   },
   icon: {
 
