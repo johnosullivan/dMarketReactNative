@@ -111,7 +111,7 @@ export default class App extends Component {
     //console.log(Web3);
     const web3Provider = new Web3.providers.HttpProvider('https://rinkeby.infura.io');
     var web3 = new Web3(web3Provider);
-    console.log("web3: ", web3.isConnected());
+    console.log("web3: ", web3);
 
     web3.eth.getBlock('latest', (err, block) => {
       console.log(block.number);
@@ -121,6 +121,11 @@ export default class App extends Component {
       console.log(balance);
 		});
 
+    web3.eth.getTransactionReceipt('0x401a1b0aaacc5f403071723fdd16357a8a31a8cc3bc8ee0360388f2a8fe25e18' ,(err, receipt) => {
+      console.log(receipt);
+		});
+
+    //console.log(web3.net.listening)
     //0x3e1FC9c177413B5235A7Cad62FC60df2C8f4C6EB
 
 
