@@ -2,10 +2,11 @@
 
 var bluebird = require('bluebird');
 //require('babel/polyfill');
-
+import './../global';
 import './../shim.js'
-import 'babel-preset-react-native-web3/globals';
-import Web3 from 'web3';
+//import 'babel-preset-react-native-web3/globals';
+
+//import Web3 from 'web3';
 
 import React, { Component } from 'react';
 import {
@@ -36,9 +37,6 @@ import PubSub from 'pubsub-js';
 import { logging } from './libs/Logger';
 
 import TxRow from './components/TxRow';
-
-//import Web3 from 'web3';
-var web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io'))
 
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { slides } from '../intro/introslides';
@@ -105,13 +103,27 @@ export default class App extends Component {
 
 
     //var web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io'))
-    const web3Provider = new Web3.providers.HttpProvider('https://rinkeby.infura.io');
-    this.web3 = new Web3(web3Provider);
-    console.log("web3: ", this.web3);
+
   }
 
   test = () => {
-    console.log("john was here");
+
+    //console.log(Web3);
+    const web3Provider = new Web3.providers.HttpProvider('https://rinkeby.infura.io');
+    var web3 = new Web3(web3Provider);
+    console.log("web3: ", web3.isConnected());
+
+    web3.eth.getBlock('latest', (err, block) => {
+      console.log(block.number);
+		});
+
+    web3.eth.getBalance('0x3e1FC9c177413B5235A7Cad62FC60df2C8f4C6EB' ,(err, balance) => {
+      console.log(balance);
+		});
+
+    //0x3e1FC9c177413B5235A7Cad62FC60df2C8f4C6EB
+
+
   };
 
   setModalVisible = (visible) => {
