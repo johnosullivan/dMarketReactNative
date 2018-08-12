@@ -125,6 +125,10 @@ export default class App extends Component {
       console.log(receipt);
 		});
 
+    web3.net.getListening((err, status) => {
+      console.log(status);
+		});
+
     //console.log(web3.net.listening)
     //0x3e1FC9c177413B5235A7Cad62FC60df2C8f4C6EB
 
