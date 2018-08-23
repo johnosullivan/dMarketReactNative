@@ -1,12 +1,12 @@
 // Required for eth-lightwallet
-
 var bluebird = require('bluebird');
 //require('babel/polyfill');
 import './../global';
 import './../shim.js'
 //import 'babel-preset-react-native-web3/globals';
-
 //import Web3 from 'web3';
+
+import Tx from 'ethereumjs-tx';
 
 import React, { Component } from 'react';
 import {
@@ -62,6 +62,8 @@ class ContentView extends Component {
   }
 }
 
+import abi from './abi.json';
+
 export default class App extends Component {
 
 
@@ -111,7 +113,7 @@ export default class App extends Component {
     //console.log(Web3);
     const web3Provider = new Web3.providers.HttpProvider('https://rinkeby.infura.io');
     var web3 = new Web3(web3Provider);
-    console.log("web3: ", web3);
+    console.log("web3: ", web3.isConnected());
 
     web3.eth.getBlock('latest', (err, block) => {
       console.log(block.number);
@@ -128,6 +130,39 @@ export default class App extends Component {
     web3.net.getListening((err, status) => {
       console.log(status);
 		});
+
+    const contract_address = "0x0b25cdb672e214acb36b153f2625df92236ab349";
+
+    const signing_user_public = "0x901473eE8ac77F0967aD3D0Ac2943d4f27668a7f";
+    const signing_user_private = "a3bcb5a37abe81976ac4facdbb36e21db62e811b9c7f7ad0f99950a472583940";
+
+    console.log(abi);
+
+    var contract = web3.eth.contract(abi).at(contract_address);
+
+
+const data1 = contract.setting.getData("john");
+console.log(data1);
+var c = web3.eth.getTransactionCount(signing_user_public);
+
+const transactionObject = {
+  from: web3.eth.defaultAccount,
+  gasLimit: web3.toHex(3007101),
+  gasPrice: web3.toHex(3007101),
+  to: contract_address,
+  nonce: web3.toHex(c),
+  data: data1
+};
+
+console.log("TransactionObject: ", transactionObject);
+
+//console.log(web3.eth.estimateGas(transactionObject));
+
+
+const transaction = new Tx(transactionObject);
+transaction.sign(Buffer.from(signing_user_private, 'hex'));
+
+console.log("Signed Tx: ", '0x' + transaction.serialize().toString('hex'));
 
     //console.log(web3.net.listening)
     //0x3e1FC9c177413B5235A7Cad62FC60df2C8f4C6EB
