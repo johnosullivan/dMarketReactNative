@@ -23,7 +23,8 @@ import {
   Animated,
   TouchableOpacity,
   Modal,
-  ListView
+  ListView,
+  NetInfo
 } from 'react-native';
 
 import { StackNavigator } from 'react-navigation';
@@ -123,7 +124,6 @@ export default class App extends Component {
       restoring: false,
       restoreMnemonic: '',
       isOpen: true,
-      isOpen: false,
       seedPhrase: 'trim bacon account saddle spend spoil festival maze fit reward august elder',
       modalVisible: false,
       dataSource: ds.cloneWithRows([{ss:""}, {}])
@@ -141,7 +141,20 @@ export default class App extends Component {
 
     var token = PubSub.subscribe('MY TOPIC', mySubscriber);
 
-
+    NetInfo.getConnectionInfo().then((connectionInfo) => {
+  console.log('Initial, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
+});
+function handleFirstConnectivityChange(connectionInfo) {
+  console.log('First change, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
+  NetInfo.removeEventListener(
+    'connectionChange',
+    handleFirstConnectivityChange
+  );
+}
+NetInfo.addEventListener(
+  'connectionChange',
+  handleFirstConnectivityChange
+);
     //var web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io'))
 
   }
@@ -158,7 +171,6 @@ export default class App extends Component {
     //console.log("web3: ", web3.isConnected());
 
     console.log(Web3.providers);
-    let web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8545'))
 
     try {
       let netIsListening = await web3.eth.net.isListening();
@@ -475,8 +487,27 @@ rightComponent={
 */}
 
 <View style={styles.container}>
-<Button title="Press to Switch" onPress={this.test} />
+{ /*<Button title="Press to Switch" onPress={this.test} />*/}
+
+<View style={ {
+width: 10,
+height: 10,
+borderRadius: 100/2,
+backgroundColor: 'black'
+}} >
+
+<View style={ {
+width: 10,
+height: 10,
+borderRadius: 100/2,
+backgroundColor: 'green'
+}} />
 </View>
+
+
+</View>
+
+
       </SideMenu>
     );
   }

@@ -15,6 +15,8 @@ const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';
 
 import { List, ListItem } from 'react-native-elements'
 
+import { Col, Row, Grid } from 'react-native-easy-grid';
+
 const list = [
   {
     name: 'Amy Farha',
@@ -33,8 +35,12 @@ const styles = StyleSheet.create({
     flex: 1,
     width: window.width,
     height: window.height,
-    backgroundColor: '#b5c3cb',
-    padding: 20,
+    backgroundColor: '#fff',
+  },
+  sideheader: {
+    width: 200,
+    height: 80,
+    backgroundColor: '#b5c3cb'
   },
   avatarContainer: {
     marginBottom: 20,
@@ -68,10 +74,25 @@ const styles = StyleSheet.create({
 */
 
 export default function Menu({ onItemSelected }) {
-  return (
-    <ScrollView scrollsToTop={false} style={styles.menu}>
 
-    </ScrollView>
+  console.log(this);
+
+  return (
+    <View style={styles.menu}>
+      <View style={styles.sideheader}>
+
+      <Grid>
+      <Col style={{
+        backgroundColor: 'red'
+      }}></Col>
+      <Col style={{
+        backgroundColor: 'green'
+      }}></Col>
+      </Grid>
+
+      </View>
+
+    </View>
   );
 }
 
