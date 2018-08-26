@@ -489,21 +489,6 @@ rightComponent={
 <View style={styles.container}>
 { /*<Button title="Press to Switch" onPress={this.test} />*/}
 
-<View style={ {
-width: 10,
-height: 10,
-borderRadius: 100/2,
-backgroundColor: 'black'
-}} >
-
-<View style={ {
-width: 10,
-height: 10,
-borderRadius: 100/2,
-backgroundColor: 'green'
-}} />
-</View>
-
 
 </View>
 

@@ -83,18 +83,55 @@ export default function Menu({ onItemSelected }) {
 
       <Grid>
       <Row style={{
-        backgroundColor: 'red',
         height: 20
       }}></Row>
-      <Row style={{
-      }}></Row>
+
+      <Row style={{ }}>
+
+      <Col style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 5
+      }}>
+
+      <Text numberOfLines={1} ellipsizeMode='middle' style={{
+        fontWeight: '700'
+      }}>0x901473eE8ac77F0967aD3D0Ac2943d4f27668a7f</Text>
+
+      </Col>
+
+      </Row>
+
       <Row>
+
       <Col style={{
-        backgroundColor: 'red'
-      }}></Col>
+        padding: 5,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        width: 25
+      }}>
+
+      <View style={ {
+      width: 12,
+      height: 12,
+      borderRadius: 100/2,
+      backgroundColor: 'green'
+      }} />
+      </Col>
+
       <Col style={{
-        backgroundColor: 'green'
-      }}></Col>
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+      }}>
+
+      <Text style={{
+        fontWeight: '400'
+      }}> #32562475</Text>
+
+      </Col>
+
       </Row>
       </Grid>
 
