@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   sideheader: {
-    width: 200,
-    height: 80,
+    width: 250,
+    height: 69,
     backgroundColor: '#b5c3cb'
   },
   avatarContainer: {
@@ -82,12 +82,20 @@ export default function Menu({ onItemSelected }) {
       <View style={styles.sideheader}>
 
       <Grid>
+      <Row style={{
+        backgroundColor: 'red',
+        height: 20
+      }}></Row>
+      <Row style={{
+      }}></Row>
+      <Row>
       <Col style={{
         backgroundColor: 'red'
       }}></Col>
       <Col style={{
         backgroundColor: 'green'
       }}></Col>
+      </Row>
       </Grid>
 
       </View>
