@@ -40,7 +40,9 @@ const styles = StyleSheet.create({
   sideheader: {
     width: 250,
     height: 69,
-    backgroundColor: '#b5c3cb'
+    backgroundColor: '#b5c3cb',
+    shadowColor: 'black',
+    shadowOpacity: 2.0
   },
   avatarContainer: {
     marginBottom: 20,
@@ -108,13 +110,12 @@ export default function Menu({ onItemSelected }) {
       <Col style={{
         padding: 5,
         justifyContent: 'center',
-        alignItems: 'flex-start',
-        width: 25
+        width: 20,
       }}>
 
       <View style={ {
-      width: 12,
-      height: 12,
+      width: 10,
+      height: 10,
       borderRadius: 100/2,
       backgroundColor: 'green'
       }} />
@@ -129,6 +130,18 @@ export default function Menu({ onItemSelected }) {
       <Text style={{
         fontWeight: '400'
       }}> #32562475</Text>
+
+      </Col>
+
+      <Col style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+      }}>
+
+      <Text style={{
+        fontWeight: '400'
+      }}> ETH 99.024</Text>
 
       </Col>
 
