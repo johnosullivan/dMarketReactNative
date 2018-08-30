@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   Dimensions,
@@ -12,6 +12,9 @@ import {
 const window = Dimensions.get('window');
 const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';
 
+import Web3 from 'web3';
+const web3Provider = new Web3.providers.HttpProvider('http://167.99.150.226:8545');
+var web3 = new Web3(web3Provider);
 
 import { List, ListItem } from 'react-native-elements'
 
@@ -38,7 +41,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   sideheader: {
-    width: 250,
     height: 69,
     backgroundColor: '#b5c3cb',
     shadowColor: 'black',
@@ -75,83 +77,105 @@ const styles = StyleSheet.create({
 </Text>
 */
 
-export default function Menu({ onItemSelected }) {
+export default class Menu extends Component {
 
-  console.log(this);
+  state = {
+    blockNumber: 0
+  };
 
-  return (
-    <View style={styles.menu}>
-      <View style={styles.sideheader}>
+  constructor(props) {
+    super(props)
 
-      <Grid>
-      <Row style={{
-        height: 20
-      }}></Row>
+  }
 
-      <Row style={{ }}>
+  componentDidMount() {
+    var self = this;
+    this._interval = setInterval(async () => {
+      // Your code
+      console.log('ping');
+      try {
+        let netIsListening = await web3.eth.net.isListening();
+        let block = await web3.eth.getBlock('latest');
+        console.log('netIsListening: ', netIsListening);
+        console.log('block: #', block.number);
+        this.setState({ blockNumber: block.number });
+      } catch (error) {
+        console.log('error:', error);
+      }
+    }, 5000);
+  }
 
-      <Col style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 5
-      }}>
+  componentWillUnmount() {
+    clearInterval(this._interval);
+  }
 
-      <Text numberOfLines={1} ellipsizeMode='middle' style={{
-        fontWeight: '700'
-      }}>0x901473eE8ac77F0967aD3D0Ac2943d4f27668a7f</Text>
+  render() {
+    var {height, width} = Dimensions.get('window');
+    return (
+      <View style={styles.menu}>
+        <View style={styles.sideheader}>
 
-      </Col>
+        <Grid>
+        <Row style={{
+          height: 20
+        }}></Row>
 
-      </Row>
+        <Row style={{ }}>
 
-      <Row>
+        <Col style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+          padding: 4
+        }}>
 
-      <Col style={{
-        padding: 5,
-        justifyContent: 'center',
-        width: 20,
-      }}>
+        <Text numberOfLines={1} ellipsizeMode='middle' style={{
+          fontWeight: '700',
+          width: (width * 0.65) + 2
+        }}>0x901473eE8ac77F0967aD3D0Ac2943d4f27668a7f</Text>
 
-      <View style={ {
-      width: 10,
-      height: 10,
-      borderRadius: 100/2,
-      backgroundColor: 'green'
-      }} />
-      </Col>
+        </Col>
 
-      <Col style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-      }}>
+        </Row>
 
-      <Text style={{
-        fontWeight: '400'
-      }}> #32562475</Text>
+        <Row>
 
-      </Col>
+        <Col style={{
+          padding: 5,
+          justifyContent: 'center',
+          width: 20,
+        }}>
 
-      <Col style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-      }}>
+        <View style={ {
+        width: 10,
+        height: 10,
+        borderRadius: 100/2,
+        backgroundColor: 'green'
+        }} />
+        </Col>
 
-      <Text style={{
-        fontWeight: '400'
-      }}> ETH 99.024</Text>
+        <Col style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+        }}>
 
-      </Col>
+        <Text style={{
+          fontWeight: '400'
+        }}> #{ this.state.blockNumber }</Text>
 
-      </Row>
-      </Grid>
+        </Col>
+
+
+        </Row>
+        </Grid>
+
+        </View>
 
       </View>
+    );
+  }
 
-    </View>
-  );
 }
 
 Menu.propTypes = {

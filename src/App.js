@@ -68,7 +68,7 @@ class ContentView extends Component {
 import abi from './abi.json';
 
 import Web3 from 'web3';
-const web3Provider = new Web3.providers.HttpProvider('http://127.0.0.1:8545');
+const web3Provider = new Web3.providers.HttpProvider('http://167.99.150.226:8545');
 var web3 = new Web3(web3Provider);
 
 const signing_user_public = "0x901473eE8ac77F0967aD3D0Ac2943d4f27668a7f";
@@ -133,6 +133,8 @@ export default class App extends Component {
     this.keystore = null
 
 
+    this._interval = null;
+
     this.toggleSideMenu = this.toggleSideMenu.bind(this);
 
     var mySubscriber = function (msg, data) {
@@ -174,7 +176,9 @@ NetInfo.addEventListener(
 
     try {
       let netIsListening = await web3.eth.net.isListening();
+      let block = await web3.eth.getBlock('latest');
       console.log('netIsListening: ', netIsListening);
+      console.log('block: ', block);
     } catch (error) {
       console.log('error:', error);
     }
@@ -239,6 +243,16 @@ console.log("Signed Tx: ", '0x' + transaction.serialize().toString('hex'));
   this.setState({
     isOpen: !this.state.isOpen
   })
+}
+
+componentDidMount() {
+  this._interval = setInterval(async () => {
+    
+  }, 5000);
+}
+
+componentWillUnmount() {
+  clearInterval(this._interval);
 }
 
   componentWillMount() {
@@ -487,7 +501,7 @@ rightComponent={
 */}
 
 <View style={styles.container}>
-{ /*<Button title="Press to Switch" onPress={this.test} />*/}
+<Button title="Press to Switch" onPress={this.test} />
 
 
 </View>
