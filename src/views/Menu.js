@@ -17,21 +17,7 @@ const web3Provider = new Web3.providers.HttpProvider('http://167.99.150.226:8545
 var web3 = new Web3(web3Provider);
 
 import { List, ListItem } from 'react-native-elements'
-
 import { Col, Row, Grid } from 'react-native-easy-grid';
-
-const list = [
-  {
-    name: 'Amy Farha',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    subtitle: 'Vice President'
-  },
-  {
-    name: 'Chris Jackson',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-    subtitle: 'Vice Chairman'
-  }
-]
 
 const styles = StyleSheet.create({
   menu: {
@@ -62,10 +48,15 @@ const styles = StyleSheet.create({
     top: 20,
   },
   item: {
-    fontSize: 14,
-    fontWeight: '300',
-    paddingTop: 5,
-  },
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: 10,
+      margin: 2,
+      borderColor: '#2a4944',
+      borderWidth: 1,
+      backgroundColor: '#d2f7f1'
+   }
 });
 
 /*
@@ -80,7 +71,21 @@ const styles = StyleSheet.create({
 export default class Menu extends Component {
 
   state = {
-    blockNumber: 0
+    blockNumber: 0,
+    names: [
+         {'name': 'Ben', 'id': 1},
+         {'name': 'Susan', 'id': 2},
+         {'name': 'Robert', 'id': 3},
+         {'name': 'Mary', 'id': 4},
+         {'name': 'Daniel', 'id': 5},
+         {'name': 'Laura', 'id': 6},
+         {'name': 'John', 'id': 7},
+         {'name': 'Debra', 'id': 8},
+         {'name': 'Aron', 'id': 9},
+         {'name': 'Ann', 'id': 10},
+         {'name': 'Steve', 'id': 11},
+         {'name': 'Olivia', 'id': 12}
+      ]
   };
 
   constructor(props) {
@@ -117,7 +122,7 @@ export default class Menu extends Component {
 
         <Grid>
         <Row style={{
-          height: 20
+          height: 25
         }}></Row>
 
         <Row style={{ }}>
@@ -131,7 +136,7 @@ export default class Menu extends Component {
 
         <Text numberOfLines={1} ellipsizeMode='middle' style={{
           fontWeight: '700',
-          width: (width * 0.65) + 2
+          width: (width * 0.65)
         }}>0x901473eE8ac77F0967aD3D0Ac2943d4f27668a7f</Text>
 
         </Col>
@@ -171,6 +176,27 @@ export default class Menu extends Component {
         </Grid>
 
         </View>
+
+        <ScrollView style = {{ paddingTop: 4 }}>
+               {
+                  this.state.names.map((item, index) => (
+                     <View key = {item.id} style = {{
+                         flexDirection: 'row',
+                         justifyContent: 'space-between',
+                         alignItems: 'center',
+                         padding: 10,
+                         margin: 2,
+                         borderColor: '#2a4944',
+                         borderWidth: 1,
+                         backgroundColor: '#eee',
+                         width: (width * 0.65)
+                      }}>
+                        <Text>{item.name}</Text>
+                     </View>
+                  ))
+               }
+            </ScrollView>
+
 
       </View>
     );
