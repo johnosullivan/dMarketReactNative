@@ -123,7 +123,7 @@ export default class App extends Component {
       generating: false,
       restoring: false,
       restoreMnemonic: '',
-      isOpen: true,
+      isOpen: false,
       seedPhrase: 'trim bacon account saddle spend spoil festival maze fit reward august elder',
       modalVisible: false,
       dataSource: ds.cloneWithRows([{ss:""}, {}])
@@ -247,7 +247,7 @@ console.log("Signed Tx: ", '0x' + transaction.serialize().toString('hex'));
 
 componentDidMount() {
   this._interval = setInterval(async () => {
-    
+
   }, 5000);
 }
 
@@ -382,11 +382,12 @@ componentWillUnmount() {
     this.setState({ restoring: true })
   }
 
-  onMenuItemSelected = item =>
+  onMenuItemSelected = (item) => {
       this.setState({
         isOpen: false,
         selectedItem: item,
       });
+  }
 
   switch = () => {
         Transition.show(
@@ -457,7 +458,6 @@ rightComponent={
           visible={this.state.modalVisible}>
           <View>
           <Header
-            backgroundColor="#65737e"
             centerComponent={{ text: 'My Transactions', style: { color: '#fff', fontSize: 15 } }}
             rightComponent={
               <TouchableOpacity>

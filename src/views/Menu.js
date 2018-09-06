@@ -53,9 +53,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       padding: 10,
       margin: 2,
-      borderColor: '#2a4944',
       borderWidth: 1,
-      backgroundColor: '#d2f7f1'
    }
 });
 
@@ -73,18 +71,9 @@ export default class Menu extends Component {
   state = {
     blockNumber: 0,
     names: [
-         {'name': 'Ben', 'id': 1},
-         {'name': 'Susan', 'id': 2},
-         {'name': 'Robert', 'id': 3},
-         {'name': 'Mary', 'id': 4},
-         {'name': 'Daniel', 'id': 5},
-         {'name': 'Laura', 'id': 6},
-         {'name': 'John', 'id': 7},
-         {'name': 'Debra', 'id': 8},
-         {'name': 'Aron', 'id': 9},
-         {'name': 'Ann', 'id': 10},
-         {'name': 'Steve', 'id': 11},
-         {'name': 'Olivia', 'id': 12}
+         {'name': 'Search', 'id': 1},
+         {'name': 'My Products', 'id': 2},
+         {'name': 'History', 'id': 3}
       ]
   };
 
@@ -116,6 +105,7 @@ export default class Menu extends Component {
 
   render() {
     var {height, width} = Dimensions.get('window');
+    //console.log(this.props.onItemSelected());
     return (
       <View style={styles.menu}>
         <View style={styles.sideheader}>
@@ -179,8 +169,10 @@ export default class Menu extends Component {
 
         <ScrollView style = {{ paddingTop: 4 }}>
                {
+
                   this.state.names.map((item, index) => (
-                     <View key = {item.id} style = {{
+                     <View key = {item.id}
+                     style = {{
                          flexDirection: 'row',
                          justifyContent: 'space-between',
                          alignItems: 'center',
@@ -191,7 +183,10 @@ export default class Menu extends Component {
                          backgroundColor: '#eee',
                          width: (width * 0.65)
                       }}>
-                        <Text>{item.name}</Text>
+                        <Text style = {{
+                          fontWeight: '800',
+
+                        }}>{item.name}</Text>
                      </View>
                   ))
                }
