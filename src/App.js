@@ -52,6 +52,8 @@ import ShowSeed from './views/wallets/ShowSeed';
 
 import SetupWallet from './views/wallets/SetupWallet';
 
+import MyTransactions from './views/transactions/MyTransactions';
+
 import url from 'url';
 
 class ContentView extends Component {
@@ -422,7 +424,9 @@ componentWillUnmount() {
     );
   }
 
-
+  dissmisModelTransactions = () => {
+    this.setModalVisible(!this.state.modalVisible);
+  }
 
   //Main view for the application
   mainApplicationView = () => {
@@ -456,38 +460,7 @@ rightComponent={
           animationType="slide"
           transparent={false}
           visible={this.state.modalVisible}>
-          <View>
-          <Header
-            centerComponent={{ text: 'My Transactions', style: { color: '#fff', fontSize: 15 } }}
-            rightComponent={
-              <TouchableOpacity>
-                <Icon
-                  name='close'
-                  underlayColor='rgba(255, 255, 255, .0)'
-                  style={styles.icon}
-                  color='white'
-                  onPress={() => {
-                    this.setModalVisible(!this.state.modalVisible);
-                  }}
-                />
-              </TouchableOpacity>}
-            leftComponent={
-              <TouchableOpacity>
-                <Icon
-                  name='edit'
-                  underlayColor='rgba(255, 255, 255, .0)'
-                  style={styles.icon}
-                  color='white'
-                  onPress={() => {
-
-                  }}
-                />
-              </TouchableOpacity>}
-          />
-          <View>
-
-            </View>
-          </View>
+          <MyTransactions dissmisModel={this.dissmisModelTransactions}/>
         </Modal>
 
         { /* Body of the transactions list */ }
@@ -529,6 +502,8 @@ rightComponent={
       </Transition>
     );
   }
+
+
 
   render() {
     logging("Application Current State: ", this.state);
