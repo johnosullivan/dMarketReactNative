@@ -185,56 +185,6 @@ NetInfo.addEventListener(
       console.log('error:', error);
     }
 
-/*
-    web3.eth.getBlock('latest', (err, block) => {
-      console.log(block.number);
-		});
-
-    web3.eth.getBalance('0x3e1FC9c177413B5235A7Cad62FC60df2C8f4C6EB' ,(err, balance) => {
-      console.log(balance);
-		});
-
-    web3.eth.getTransactionReceipt('0x401a1b0aaacc5f403071723fdd16357a8a31a8cc3bc8ee0360388f2a8fe25e18' ,(err, receipt) => {
-      console.log(receipt);
-		});
-
-    web3.net.getListening((err, status) => {
-      console.log(status);
-		});
-
-
-    console.log(abi);
-
-    var contract = web3.eth.contract(abi).at(contract_address);
-    */
-    //request();
-/*
-const data1 = contract.setting.getData("john");
-console.log(data1);
-var c = web3.eth.getTransactionCount(signing_user_public);
-
-const transactionObject = {
-  from: web3.eth.defaultAccount,
-  gasLimit: web3.toHex(3007101),
-  gasPrice: web3.toHex(3007101),
-  to: contract_address,
-  nonce: web3.toHex(c),
-  data: data1
-};
-
-console.log("TransactionObject: ", transactionObject);
-
-
-
-const transaction = new Tx(transactionObject);
-transaction.sign(Buffer.from(signing_user_private, 'hex'));
-
-console.log("Signed Tx: ", '0x' + transaction.serialize().toString('hex'));
-*/
-    //console.log(web3.net.listening)
-    //0x3e1FC9c177413B5235A7Cad62FC60df2C8f4C6EB
-
-
   };
 
   setModalVisible = (visible) => {
@@ -259,15 +209,6 @@ componentWillUnmount() {
 
   componentWillMount() {
 
-
-//console.log("connected: ", web3.isConnected());
-  //web3.eth.getBlock('latest').then(console.log)
-    //this.loadKeystore();
-    //this._generateNewWallet();
-    /*const balance = web3.eth.getBalance('0x1aCc2977D4C4C8AcF2e87840ea1432248AEfeEA7', (err2, balance) => {
-       console.log('Balance ' + balance);
-       this.setState({balance: 'Balance: ' + balance});
-    });*/
   }
 
   _saveKeystore = async () => {
