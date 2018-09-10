@@ -66,14 +66,18 @@ const styles = StyleSheet.create({
 </Text>
 */
 
+/*
+{'name': 'Search', 'id': 1},
+{'name': 'My Products', 'id': 2},
+{'name': 'History', 'id': 3}
+*/
+
 export default class Menu extends Component {
 
   state = {
     blockNumber: 0,
     names: [
-         {'name': 'Search', 'id': 1},
-         {'name': 'My Products', 'id': 2},
-         {'name': 'History', 'id': 3}
+         
       ]
   };
 

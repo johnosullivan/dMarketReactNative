@@ -22,10 +22,10 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 
 const styles = StyleSheet.create({
     container: {
-       padding: 23,
-       paddingTop: 50,
-       backgroundColor: "#5A8DAB",
-       flex: 1,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#eee'
     }
 });
 
@@ -48,9 +48,90 @@ export default class MyTransactions extends Component {
                 "mineDate": "Sep-08-2018 10:43:55 PM +UTC",
                 "blockNumber": "6296691",
                 "toAddress": "0x689c56aef474df92d44a1b70850f808488f9769c",
-                "id": 284935273,
+                "id": 28493325273,
                 "status": 1
-            }
+            },
+            { 
+                 "txHash": "0x392c01d11d692908c5d899fa4ddb091e2f641524163c21f1c74fc0229b565e86",
+                 "gasUsed": "21000",
+                 "mineDate": "Sep-08-2018 10:43:55 PM +UTC",
+                 "blockNumber": "6296691",
+                 "toAddress": "0x689c56aef474df92d44a1b70850f808488f9769c",
+                 "id": 232232,
+                 "status": 1
+             },
+             { 
+                  "txHash": "0x392c01d11d692908c5d899fa4ddb091e2f641524163c21f1c74fc0229b565e86",
+                  "gasUsed": "21000",
+                  "mineDate": "Sep-08-2018 10:43:55 PM +UTC",
+                  "blockNumber": "6296691",
+                  "toAddress": "0x689c56aef474df92d44a1b70850f808488f9769c",
+                  "id": 284933425273,
+                  "status": 1
+              },
+              { 
+                   "txHash": "0x392c01d11d692908c5d899fa4ddb091e2f641524163c21f1c74fc0229b565e86",
+                   "gasUsed": "21000",
+                   "mineDate": "Sep-08-2018 10:43:55 PM +UTC",
+                   "blockNumber": "6296691",
+                   "toAddress": "0x689c56aef474df92d44a1b70850f808488f9769c",
+                   "id": 2849234535273,
+                   "status": 1
+               },
+               { 
+                    "txHash": "0x392c01d11d692908c5d899fa4ddb091e2f641524163c21f1c74fc0229b565e86",
+                    "gasUsed": "21000",
+                    "mineDate": "Sep-08-2018 10:43:55 PM +UTC",
+                    "blockNumber": "6296691",
+                    "toAddress": "0x689c56aef474df92d44a1b70850f808488f9769c",
+                    "id": 284243935273,
+                    "status": 1
+                },
+                { 
+                     "txHash": "0x392c01d11d692908c5d899fa4ddb091e2f641524163c21f1c74fc0229b565e86",
+                     "gasUsed": "21000",
+                     "mineDate": "Sep-08-2018 10:43:55 PM +UTC",
+                     "blockNumber": "6296691",
+                     "toAddress": "0x689c56aef474df92d44a1b70850f808488f9769c",
+                     "id": 28454935273,
+                     "status": 1
+                 },
+                 { 
+                      "txHash": "0x392c01d11d692908c5d899fa4ddb091e2f641524163c21f1c74fc0229b565e86",
+                      "gasUsed": "21000",
+                      "mineDate": "Sep-08-2018 10:43:55 PM +UTC",
+                      "blockNumber": "6296691",
+                      "toAddress": "0x689c56aef474df92d44a1b70850f808488f9769c",
+                      "id": 2844321935273,
+                      "status": 1
+                  },
+                  { 
+                       "txHash": "0x392c01d11d692908c5d899fa4ddb091e2f641524163c21f1c74fc0229b565e86",
+                       "gasUsed": "21000",
+                       "mineDate": "Sep-08-2018 10:43:55 PM +UTC",
+                       "blockNumber": "6296691",
+                       "toAddress": "0x689c56aef474df92d44a1b70850f808488f9769c",
+                       "id": 221384935273,
+                       "status": 1
+                   },
+                   { 
+                        "txHash": "0x392c01d11d692908c5d899fa4ddb091e2f641524163c21f1c74fc0229b565e86",
+                        "gasUsed": "21000",
+                        "mineDate": "Sep-08-2018 10:43:55 PM +UTC",
+                        "blockNumber": "6296691",
+                        "toAddress": "0x689c56aef474df92d44a1b70850f808488f9769c",
+                        "id": 2849555535273,
+                        "status": 1
+                    },
+                    { 
+                         "txHash": "0x392c01d11d692908c5d899fa4ddb091e2f641524163c21f1c74fc0229b565e86",
+                         "gasUsed": "21000",
+                         "mineDate": "Sep-08-2018 10:43:55 PM +UTC",
+                         "blockNumber": "6296691",
+                         "toAddress": "0x689c56aef474df92d44a1b70850f808488f9769c",
+                         "id": 284333935273,
+                         "status": 1
+                     }
         ]
     }
 
@@ -84,8 +165,10 @@ export default class MyTransactions extends Component {
                         />
                         </TouchableOpacity>
                     }
-                />                    
-                <ScrollView style = {{ paddingTop: 4 }}>
+                />
+                <View>
+
+                <ScrollView>
                 {
                   this.state.txs.map((item, index) => (
                      <View key = {item.id}
@@ -132,7 +215,8 @@ export default class MyTransactions extends Component {
                   ))
                 }
                 </ScrollView>
-            </View>
+                </View>
+                </View>
         )
     }
 
